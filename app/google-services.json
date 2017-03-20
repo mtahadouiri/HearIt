@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "296909877503",
+    "firebase_url": "https://hearit-e4795.firebaseio.com",
+    "project_id": "hearit-e4795",
+    "storage_bucket": "hearit-e4795.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:296909877503:android:396494f04495e4c2",
+        "android_client_info": {
+          "package_name": "taha.com.hearit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "296909877503-ceqp7huf4u60fhp7tnnf12g0qtlbfuci.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "taha.com.hearit",
+            "certificate_hash": "93500eef27c2f1d0e6e703ae8f7a8de4fa262033"
+          }
+        },
+        {
+          "client_id": "296909877503-kr53f1f8pv8nlrdgr5dvnfj087r64inc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJcgCPIEY-7FnyNWL2S2OVYoe76_w-0Gg"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "296909877503-kr53f1f8pv8nlrdgr5dvnfj087r64inc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
