@@ -1,14 +1,28 @@
 package taha.com.hearit.Frags;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import taha.com.hearit.Activities.Home;
+import taha.com.hearit.Activities.Main;
 import taha.com.hearit.R;
 
 /**
@@ -21,6 +35,8 @@ import taha.com.hearit.R;
  */
 public class SignIn extends Fragment {
     private TextView textViewSignUp;
+    private Button buttonSignin;
+    private EditText email,pwd;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,6 +47,7 @@ public class SignIn extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private FirebaseAuth mAuth;
 
     public SignIn() {
         // Required empty public constructor
@@ -69,13 +86,26 @@ public class SignIn extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_sign_in, container, false);
         textViewSignUp = (TextView)v.findViewById(R.id.textViewSignUp);
+        buttonSignin =(Button)v.findViewById(R.id.buttonSignin);
+        email = (EditText)v.findViewById(R.id.editTextEmail);
+        pwd = (EditText)v.findViewById(R.id.editTextPassword);
+
+        mAuth = FirebaseAuth.getInstance();
+
         textViewSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.frameLayout, new SignUp(), "NewFragmentTag").addToBackStack(null);
+                ft.commit();
             }
         });
-
+        buttonSignin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn(email.getText().toString(),pwd.getText().toString());
+            }
+        });
         return v;
     }
 
@@ -116,5 +146,27 @@ public class SignIn extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+    private void signIn(String email,String password){
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("signInEmailAndPassword", "signInWithEmail:onComplete:" + task.isSuccessful());
+
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Log.w("signInEmailAndPassword", "signInWithEmail:failed", task.getException());
+                            Toast.makeText(getActivity(), R.string.auth_failed,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else {
+                            Intent i = new Intent(getActivity(), Home.class);
+                            startActivity(i);
+                        }
+                    }
+                });
     }
 }

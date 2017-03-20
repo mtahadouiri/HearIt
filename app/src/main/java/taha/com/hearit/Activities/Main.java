@@ -24,6 +24,7 @@ public class Main extends AppCompatActivity implements SignIn.OnFragmentInteract
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         frameLayout = (FrameLayout) findViewById(R.id.frameLayout);
+        mAuth = FirebaseAuth.getInstance();
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {

@@ -1,13 +1,25 @@
 package taha.com.hearit.Frags;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
+import taha.com.hearit.Activities.Home;
 import taha.com.hearit.R;
 
 /**
@@ -19,6 +31,10 @@ import taha.com.hearit.R;
  * create an instance of this fragment.
  */
 public class SignUp extends Fragment {
+    private Button buttonSignup;
+    private EditText email,pwd;
+    private FirebaseAuth mAuth;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -65,7 +81,40 @@ public class SignUp extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_sign_up, container, false);
+        View v= inflater.inflate(R.layout.fragment_sign_up, container, false);
+        buttonSignup = (Button)v.findViewById(R.id.buttonSignup);
+        email =(EditText)v.findViewById(R.id.editTextEmail);
+        pwd = (EditText)v.findViewById(R.id.editTextPassword);
+        mAuth = FirebaseAuth.getInstance();
+
+        buttonSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signUp(email.getText().toString(),pwd.getText().toString());
+            }
+        });
+        return v;
+    }
+
+    private void signUp(String email, String pwd) {
+        mAuth.createUserWithEmailAndPassword(email, pwd)
+                .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        Log.d("createUserWithEmail", "createUserWithEmail:onComplete:" + task.isSuccessful());
+                        // If sign in fails, display a message to the user. If sign in succeeds
+                        // the auth state listener will be notified and logic to handle the
+                        // signed in user can be handled in the listener.
+                        if (!task.isSuccessful()) {
+                            Toast.makeText(getActivity(), R.string.auth_failed,
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        else  {
+                            Intent i = new Intent(getActivity(), Home.class);
+                            startActivity(i);
+                        }
+                    }
+                });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
