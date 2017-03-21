@@ -1,5 +1,6 @@
 package taha.com.hearit.Activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +16,11 @@ import taha.com.hearit.Frags.SignIn;
 import taha.com.hearit.Frags.SignUp;
 import taha.com.hearit.R;
 
-public class Main extends AppCompatActivity implements SignIn.OnFragmentInteractionListener,SignUp.OnFragmentInteractionListener{
+public class Main extends AppCompatActivity implements SignIn.OnFragmentInteractionListener, SignUp.OnFragmentInteractionListener {
     private FrameLayout frameLayout;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +34,8 @@ public class Main extends AppCompatActivity implements SignIn.OnFragmentInteract
                 if (user != null) {
                     // User is signed in
                     Log.d("onAuthStateChanged", "onAuthStateChanged:signed_in:" + user.getUid());
+                    Intent i = new Intent(Main.this, Home.class);
+                    startActivity(i);
                 } else {
                     // User is signed out
                     Log.d("onAuthStateChanged", "onAuthStateChanged:signed_out");
@@ -53,7 +57,7 @@ public class Main extends AppCompatActivity implements SignIn.OnFragmentInteract
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-        Log.d("FragmentInteraction",uri.getFragment());
+        Log.d("FragmentInteraction", uri.getFragment());
     }
 
     @Override
