@@ -6,12 +6,16 @@ import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import taha.com.hearit.Entity.Profile;
 import taha.com.hearit.R;
 
 public class Home extends AppCompatActivity {
 
     public static FirebaseUser user;
+    public static Profile myProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +32,11 @@ public class Home extends AppCompatActivity {
             // authenticate with your backend server, if you have one. Use
             // FirebaseUser.getToken() instead.
             String uid = user.getUid();
+            myProfile = new Profile(user,user.getDisplayName());
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference myRef = database.getReference("Profile").child(myProfile.getUser().getUid());
+
+            myRef.setValue(myProfile.getName());
         }
     }
 }
