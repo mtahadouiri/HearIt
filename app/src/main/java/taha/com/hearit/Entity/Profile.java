@@ -10,12 +10,11 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class Profile  {
     private FirebaseUser user;
-    private String name,description;
+    private String name;
 
-    public Profile(FirebaseUser user, String name, String description) {
+    public Profile(FirebaseUser user, String name) {
         this.user = user;
         this.name = name;
-        this.description = description;
     }
 
     public FirebaseUser getUser() {
@@ -34,11 +33,5 @@ public class Profile  {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
 }

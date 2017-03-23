@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "296909877503-m0ug37aldq99fj972kld2k47olbusnb7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "taha.com.hearit",
+            "certificate_hash": "87ff4b0ad90d964153fe3584763fc87e3e9e9747"
+          }
+        },
+        {
           "client_id": "296909877503-ceqp7huf4u60fhp7tnnf12g0qtlbfuci.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

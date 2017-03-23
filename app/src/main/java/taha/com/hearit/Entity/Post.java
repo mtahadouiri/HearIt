@@ -55,4 +55,44 @@ public class Post {
     public void setHashtag(List<String> hashtag) {
         this.hashtags = hashtag;
     }
+
+    public FirebaseUser getPoster() {
+        return poster;
+    }
+
+    public void setPoster(FirebaseUser poster) {
+        this.poster = poster;
+    }
+
+    public void setHashtags(List<String> hashtags) {
+        this.hashtags = hashtags;
+    }
+
+    public List<Profile> getVoters() {
+        return voters;
+    }
+
+    public void setVoters(List<Profile> voters) {
+        this.voters = voters;
+    }
+
+    public List<Profile> getCommentors() {
+        return commentors;
+    }
+
+    public void setCommentors(List<Profile> commentors) {
+        this.commentors = commentors;
+    }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "poster=" + poster +
+                ", text='" + text + '\'' +
+                ", date=" + date +
+                ", hashtags=" + hashtags +
+                ", voters=" + voters +
+                ", commentors=" + commentors +
+                '}';
+    }
 }
