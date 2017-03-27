@@ -7,6 +7,7 @@ import android.os.UserHandle;
 import android.os.UserManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,28 +72,32 @@ public class Feed extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =inflater.inflate(R.layout.fragment_feed, container, false);
-        rv =(RecyclerView) v.findViewById(R.id.rvFeed);
-        fab=(FloatingActionButton)v.findViewById(R.id.addPost);
+        View v = inflater.inflate(R.layout.fragment_feed, container, false);
+        rv = (RecyclerView) v.findViewById(R.id.rvFeed);
+        fab = (FloatingActionButton) v.findViewById(R.id.addPost);
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                if (dy > 0 ||dy<0 && fab.isShown())
-                {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                if (dy > 0 || dy < 0 && fab.isShown()) {
                     fab.hide();
                 }
             }
 
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
-            {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE)
-                {
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
                     fab.show();
                 }
 
                 super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final FragmentTransaction ft = getFragmentManager().beginTransaction();
+                ft.replace(R.id.frameLayout, new AddPost(), "NewFragmentTag").addToBackStack(null);
+                ft.commit();
             }
         });
         return v;

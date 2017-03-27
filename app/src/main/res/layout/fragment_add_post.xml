@@ -5,19 +5,46 @@
     tools:context="taha.com.hearit.Frags.AddPost">
 
     <!-- TODO: Update blank fragment layout -->
-<RelativeLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-
-    <android.support.design.widget.TextInputLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <EditText
+            android:id="@+id/message"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="hint" />
-    </android.support.design.widget.TextInputLayout>
-</RelativeLayout>
+            android:layout_margin="10dp"
+            android:background="@drawable/border"
+            android:gravity="top|start"
+            android:hint="@string/write_here"
+            android:lines="10"
+            android:maxLength="5000"
+            android:padding="10dp" />
+
+        <EditText
+            android:id="@+id/link"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/message"
+            android:layout_margin="10dp"
+            android:background="@drawable/border"
+            android:gravity="top|start"
+            android:hint="Link to song"
+            android:lines="1"
+            android:maxLines="1"
+            android:padding="10dp" />
+
+
+        <Button
+            android:id="@+id/cnfrmButton"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="5dp"
+            android:background="@drawable/border"
+            android:elevation="5dp"
+            android:text="@string/confirm" />
+    </RelativeLayout>
 </FrameLayout>

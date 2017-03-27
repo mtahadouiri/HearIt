@@ -7,8 +7,23 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.DateFormat;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import taha.com.hearit.Entity.Post;
 import taha.com.hearit.R;
+
+import static taha.com.hearit.Activities.Main.user;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,12 +38,15 @@ public class AddPost extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private EditText corpse, url;
+    private Button add;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private DatabaseReference mDatabase;
 
     public AddPost() {
         // Required empty public constructor
@@ -59,14 +77,25 @@ public class AddPost extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v= inflater.inflate(R.layout.fragment_add_post, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_post, container, false);
+        corpse = (EditText) v.findViewById(R.id.message);
+        url = (EditText) v.findViewById(R.id.link);
+        add = (Button) v.findViewById(R.id.cnfrmButton);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                postSth(corpse.getText().toString(),url.getText().toString());
+            }
+        });
 
         return v;
     }
@@ -108,5 +137,16 @@ public class AddPost extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void postSth(String text, String url) {
+        Post post=new Post(user.getUid(),text,url,new Date(System.currentTimeMillis()));
+
+        String key = mDatabase.child("posts").push().getKey();
+        Map<String, Object> postValues = post.toMap();
+        Map<String, Object> childUpdates = new HashMap<>();
+        childUpdates.put("/posts/" + key, postValues);
+        childUpdates.put("/user-posts/" + user.getUid() + "/" + key, postValues);
+        mDatabase.updateChildren(childUpdates);
     }
 }

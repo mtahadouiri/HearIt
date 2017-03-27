@@ -1,28 +1,30 @@
 package taha.com.hearit.Entity;
 
 import android.os.UserManager;
+import android.support.annotation.NonNull;
 
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by PC on 21/03/2017.
  */
 
-public class Profile  {
-    private FirebaseUser user;
+public class Profile {
     private String name;
+    private String email;
+    private String id;
 
-    public Profile(FirebaseUser user, String name) {
-        this.user = user;
+    public Profile( String email,String name, String id) {
         this.name = name;
+        this.email = email;
+        this.id = id;
     }
 
-    public FirebaseUser getUser() {
-        return user;
-    }
-
-    public void setUser(FirebaseUser user) {
-        this.user = user;
+    public Profile() {
     }
 
     public String getName() {
@@ -33,5 +35,19 @@ public class Profile  {
         this.name = name;
     }
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

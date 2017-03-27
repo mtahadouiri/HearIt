@@ -17,4 +17,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="auth_failed">Please verify the fields</string>
+    <string name="write_here">Write here</string>
+    <string name="confirm">Confirm</string>
 </resources>

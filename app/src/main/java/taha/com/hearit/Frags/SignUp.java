@@ -18,8 +18,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import taha.com.hearit.Activities.Home;
+import taha.com.hearit.Entity.Profile;
 import taha.com.hearit.R;
 
 /**
@@ -32,7 +36,7 @@ import taha.com.hearit.R;
  */
 public class SignUp extends Fragment {
     private Button buttonSignup;
-    private EditText email,pwd;
+    private EditText email,pwd,username;
     private FirebaseAuth mAuth;
 
     // TODO: Rename parameter arguments, choose names that match
@@ -45,6 +49,9 @@ public class SignUp extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private DatabaseReference mDatabase;
+    private FirebaseUser user;
+    private Profile myProfile;
 
     public SignUp() {
         // Required empty public constructor
@@ -84,19 +91,20 @@ public class SignUp extends Fragment {
         View v= inflater.inflate(R.layout.fragment_sign_up, container, false);
         buttonSignup = (Button)v.findViewById(R.id.buttonSignup);
         email =(EditText)v.findViewById(R.id.editTextEmail);
+        username =(EditText)v.findViewById(R.id.editTextName);
         pwd = (EditText)v.findViewById(R.id.editTextPassword);
         mAuth = FirebaseAuth.getInstance();
 
         buttonSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                signUp(email.getText().toString(),pwd.getText().toString());
+                signUp(email.getText().toString(),username.getText().toString(),pwd.getText().toString());
             }
         });
         return v;
     }
 
-    private void signUp(String email, String pwd) {
+    private void signUp(final String email, final String username, String pwd) {
         mAuth.createUserWithEmailAndPassword(email, pwd)
                 .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                     @Override
@@ -108,8 +116,13 @@ public class SignUp extends Fragment {
                         if (!task.isSuccessful()) {
                             Toast.makeText(getActivity(), R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
+                            Log.d("fail",task.getException().toString());
                         }
                         else  {
+                            user = FirebaseAuth.getInstance().getCurrentUser();
+                            myProfile = new Profile(email,username,user.getUid());
+                            mDatabase = FirebaseDatabase.getInstance().getReference();
+                            mDatabase.child("users").child(user.getUid()).setValue(myProfile);
                             Intent i = new Intent(getActivity(), Home.class);
                             startActivity(i);
                         }

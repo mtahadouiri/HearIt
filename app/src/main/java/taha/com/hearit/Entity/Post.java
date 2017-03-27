@@ -4,25 +4,35 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by PC on 21/03/2017.
  */
 
 public class Post {
-    private FirebaseUser poster;
-    private String text;
+    private String poster;
+    private String text,url;
     private Date date;
+    public int ups = 0;
     private List<String> hashtags;
     private List<Profile> voters;
     private List<Profile> commentors;
 
+    public Post(String poster, String text, String URL, Date date) {
+        this.poster = poster;
+        this.text = text;
+        this.url = URL;
+        this.date = date;
+    }
 
     public Post() {
     }
 
-    public Post(FirebaseUser poster, String text, Date date, List<String> hashtags) {
+
+    public Post(String poster, String text, Date date, List<String> hashtags) {
         this.poster = poster;
         this.text = text;
         this.date = date;
@@ -56,11 +66,11 @@ public class Post {
         this.hashtags = hashtag;
     }
 
-    public FirebaseUser getPoster() {
+    public String getPoster() {
         return poster;
     }
 
-    public void setPoster(FirebaseUser poster) {
+    public void setPoster(String poster) {
         this.poster = poster;
     }
 
@@ -84,6 +94,14 @@ public class Post {
         this.commentors = commentors;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -94,5 +112,15 @@ public class Post {
                 ", voters=" + voters +
                 ", commentors=" + commentors +
                 '}';
+    }
+
+    public Map<String, Object> toMap() {
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("uid", poster);
+        result.put("body", text);
+        result.put("date", date);
+        result.put("url", url);
+        result.put("ups", 0);
+        return result;
     }
 }
