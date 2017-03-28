@@ -2,8 +2,6 @@ package taha.com.hearit.Entity;
 
 import android.util.Log;
 
-import com.google.firebase.auth.FirebaseUser;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -12,6 +10,8 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import taha.com.hearit.Activities.Main;
+
 /**
  * Created by PC on 21/03/2017.
  */
@@ -19,25 +19,28 @@ import java.util.regex.Pattern;
 public class Post {
     private String poster;
     private String text,url;
-    private Date date;
-    public int ups = 0;
+    private Long date;
+    public int ups ;
+    public int userUps;
+    private double id;
     private List<String> hashtags;
     private List<Profile> voters;
     private List<Profile> commentors;
 
-    public Post(String poster, String text, String URL, Date date) {
+    public Post(String poster, String text, String URL, Long date) {
         this.poster = poster;
         this.text = text;
         this.url = URL;
         this.date = date;
-
+        this.id =Math.random()*System.currentTimeMillis();
+        ups=0;
     }
 
     public Post() {
     }
 
 
-    public Post(String poster, String text, Date date, List<String> hashtags) {
+    public Post(String poster, String text, Long date, List<String> hashtags) {
         this.poster = poster;
         this.text = text;
         this.date = date;
@@ -46,6 +49,13 @@ public class Post {
         this.commentors = new ArrayList<>();
     }
 
+    public double getId() {
+        return id;
+    }
+
+    public void setId(double id) {
+        this.id = id;
+    }
 
     public String getText() {
         return text;
@@ -55,11 +65,11 @@ public class Post {
         this.text = text;
     }
 
-    public Date getDate() {
+    public Long getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(Long date) {
         this.date = date;
     }
 
@@ -115,6 +125,14 @@ public class Post {
         this.ups = ups;
     }
 
+    public int getUserUps() {
+        return userUps;
+    }
+
+    public void setUserUps(int userUps) {
+        this.userUps = userUps;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
@@ -123,6 +141,7 @@ public class Post {
                 ", url='" + url + '\'' +
                 ", date=" + date +
                 ", ups=" + ups +
+                ", id=" + id +
                 ", hashtags=" + hashtags +
                 ", voters=" + voters +
                 ", commentors=" + commentors +
@@ -132,10 +151,13 @@ public class Post {
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("uid", poster);
-        result.put("body", text);
+        result.put("text", text);
         result.put("date", date);
         result.put("url", extractYTId(url));
         result.put("ups", ups);
+        result.put("poster", Main.myPROFILE.getName());
+        result.put("userups",userUps);
+        result.put("id",this.getId());
         return result;
     }
 

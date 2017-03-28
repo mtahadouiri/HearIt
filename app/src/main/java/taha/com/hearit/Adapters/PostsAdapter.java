@@ -14,13 +14,17 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubeStandalonePlayer;
+import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 
 import java.util.List;
 
 import taha.com.hearit.Activities.Main;
 import taha.com.hearit.Entity.Post;
+import taha.com.hearit.Frags.AddPost;
+import taha.com.hearit.Frags.Feed;
 import taha.com.hearit.R;
 
 /**
@@ -42,13 +46,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
     }
 
     @Override
-    public void onBindViewHolder(PostsViewHolder holder, int position) {
+    public void onBindViewHolder(final PostsViewHolder holder, int position) {
         final Post post=postList.get(position);
         holder.userName.setText(post.getPoster());
-        //holder.numVotes.setText(post.ups);
+        holder.numVotes.setText(""+post.getUps());
         holder.userUps.setText("++"+post.getUps());
         holder.txtCorpse.setText(post.getText());
-        Log.d("Post",post.toString());
+        Log.d("Ups",""+post.getUps());
         holder.playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +60,34 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
                 ctx.startActivity(intent);
             }
         });
+        final YouTubeThumbnailLoader.OnThumbnailLoadedListener  onThumbnailLoadedListener = new YouTubeThumbnailLoader.OnThumbnailLoadedListener(){
+            @Override
+            public void onThumbnailError(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader.ErrorReason errorReason) {
 
+            }
+
+            @Override
+            public void onThumbnailLoaded(YouTubeThumbnailView youTubeThumbnailView, String s) {
+                youTubeThumbnailView.setVisibility(View.VISIBLE);
+                holder.relativeLayoutOverYouTubeThumbnailView.setVisibility(View.VISIBLE);
+            }
+        };
+
+        holder.youTubeThumbnailView.initialize(Main.YOUTUBE_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
+
+                youTubeThumbnailLoader.setVideo(post.getUrl());
+                youTubeThumbnailLoader.setOnThumbnailLoadedListener(onThumbnailLoadedListener);
+                Log.d("thumbnail","success");
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
+            Log.d("Failed",youTubeInitializationResult.toString());
+            }
+
+        });
     }
 
     @Override

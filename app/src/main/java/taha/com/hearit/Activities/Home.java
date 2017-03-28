@@ -20,11 +20,11 @@ import taha.com.hearit.Frags.Feed;
 import taha.com.hearit.R;
 
 public class Home extends AppCompatActivity implements Feed.OnFragmentInteractionListener, AddPost.OnFragmentInteractionListener {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
 
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
         if (f == null) {

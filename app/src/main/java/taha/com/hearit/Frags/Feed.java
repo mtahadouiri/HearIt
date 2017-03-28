@@ -3,21 +3,22 @@ package taha.com.hearit.Frags;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.UserHandle;
-import android.os.UserManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -87,16 +88,19 @@ public class Feed extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         postList=new ArrayList<>();
-
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference("posts");
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_feed, container, false);
         rv = (RecyclerView) v.findViewById(R.id.rvFeed);
         rv.setHasFixedSize(true);
         LinearLayoutManager llm = new LinearLayoutManager(getContext());
         llm.setOrientation(LinearLayoutManager.VERTICAL);
+        llm.setReverseLayout(true);
+        llm.setStackFromEnd(true);
+
         rv.setLayoutManager(llm);
 
-        createList();
 
         postsAdapter=new PostsAdapter(postList,getContext());
         rv.setAdapter(postsAdapter);
@@ -127,6 +131,7 @@ public class Feed extends Fragment {
                 ft.commit();
             }
         });
+        updateList();
         return v;
     }
 
@@ -168,11 +173,55 @@ public class Feed extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+    private void updateList(){
+        reference.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                postList.add(dataSnapshot.getValue(Post.class));
+                postsAdapter.notifyDataSetChanged();
+                Log.d("DatasnapAdded",dataSnapshot.getValue().toString());
+            }
 
-    private void createList(){
-        for(int i=0;i<10;i++){
-            Post post = new Post("Taha","dfjslkjsdlmkhsdfmklgdfngk jdfhgdqfsjlg hdsqfmlgjkf sdhgkjmlhfdkgmldqsfngml qskghqmfdsljkg qdsfmlkgj fg",Post.extractYTId("https://www.youtube.com/watch?v=PJTs8vZKlWw"),new Date(System.currentTimeMillis()));
-            postList.add(post);
-        }
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Post post = dataSnapshot.getValue(Post.class);
+                Log.d("DatasnapChanged",dataSnapshot.getValue().toString());
+                int index= getIndex(post);
+                postList.set(index,post);
+                postsAdapter.notifyItemChanged(index,post);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Post post = dataSnapshot.getValue(Post.class);
+                Log.d("DatasnapRemoved",dataSnapshot.getValue().toString());
+                int index= getIndex(post);
+                Log.d("Index",index+"");
+                postList.remove(index);
+                postsAdapter.notifyItemRemoved(index);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
+
+    private int getIndex(Post post){
+        int index = -1;
+        for (int i =0;i<postList.size();i++){
+            if (postList.get(i).getId()==post.getId()){
+                index=i;
+                return i;
+            }
+        }
+        return index;
+    }
+
 }

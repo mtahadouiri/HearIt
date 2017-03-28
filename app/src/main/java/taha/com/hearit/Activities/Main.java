@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import taha.com.hearit.Entity.Profile;
 import taha.com.hearit.Frags.SignIn;
 import taha.com.hearit.Frags.SignUp;
 import taha.com.hearit.R;
@@ -22,6 +23,7 @@ public class Main extends AppCompatActivity implements SignIn.OnFragmentInteract
     private FirebaseAuth.AuthStateListener mAuthListener;
     public static FirebaseUser user;
     public static final String YOUTUBE_API_KEY = "AIzaSyCjJzLcwq3kz9ymIVJ7XJViTLQZKkmIbw8";
+    public static Profile myPROFILE;
 
 
     @Override
@@ -37,6 +39,7 @@ public class Main extends AppCompatActivity implements SignIn.OnFragmentInteract
                 if (user != null) {
                     // User is signed in
                     Log.d("onAuthStateChanged", "onAuthStateChanged:signed_in:" + user.getUid());
+                    myPROFILE=new Profile(user.getEmail(),"mtdev",user.getUid());
                     Intent i = new Intent(Main.this, Home.class);
                     startActivity(i);
                 } else {

@@ -3,6 +3,7 @@ package taha.com.hearit.Frags;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -143,7 +144,7 @@ public class AddPost extends Fragment {
     }
 
     private void postSth(String text, String url) {
-        Post post = new Post(user.getUid(), text, url, new Date(System.currentTimeMillis()));
+        Post post = new Post(user.getUid(), text, url,new Date().getTime());
 
         String key = mDatabase.child("posts").push().getKey();
         Map<String, Object> postValues = post.toMap();
