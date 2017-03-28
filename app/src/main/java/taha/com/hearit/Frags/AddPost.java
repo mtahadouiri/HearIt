@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,8 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import taha.com.hearit.Entity.Post;
 import taha.com.hearit.R;
@@ -93,7 +96,7 @@ public class AddPost extends Fragment {
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                postSth(corpse.getText().toString(),url.getText().toString());
+                postSth(corpse.getText().toString(), url.getText().toString());
             }
         });
 
@@ -140,7 +143,7 @@ public class AddPost extends Fragment {
     }
 
     private void postSth(String text, String url) {
-        Post post=new Post(user.getUid(),text,url,new Date(System.currentTimeMillis()));
+        Post post = new Post(user.getUid(), text, url, new Date(System.currentTimeMillis()));
 
         String key = mDatabase.child("posts").push().getKey();
         Map<String, Object> postValues = post.toMap();
@@ -149,4 +152,6 @@ public class AddPost extends Fragment {
         childUpdates.put("/user-posts/" + user.getUid() + "/" + key, postValues);
         mDatabase.updateChildren(childUpdates);
     }
+
+
 }

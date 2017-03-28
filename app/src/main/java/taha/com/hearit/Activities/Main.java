@@ -21,6 +21,8 @@ public class Main extends AppCompatActivity implements SignIn.OnFragmentInteract
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     public static FirebaseUser user;
+    public static final String YOUTUBE_API_KEY = "AIzaSyCjJzLcwq3kz9ymIVJ7XJViTLQZKkmIbw8";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -8,11 +8,22 @@ import android.os.UserManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.security.Timestamp;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import taha.com.hearit.Adapters.PostsAdapter;
+import taha.com.hearit.Entity.Post;
 import taha.com.hearit.R;
 
 /**
@@ -26,6 +37,10 @@ import taha.com.hearit.R;
 public class Feed extends Fragment {
     private RecyclerView rv;
     private FloatingActionButton fab;
+    private PostsAdapter postsAdapter;
+    private List<Post> postList;
+    private FirebaseDatabase database;
+    private DatabaseReference reference;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -71,9 +86,21 @@ public class Feed extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        postList=new ArrayList<>();
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_feed, container, false);
         rv = (RecyclerView) v.findViewById(R.id.rvFeed);
+        rv.setHasFixedSize(true);
+        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        rv.setLayoutManager(llm);
+
+        createList();
+
+        postsAdapter=new PostsAdapter(postList,getContext());
+        rv.setAdapter(postsAdapter);
+
         fab = (FloatingActionButton) v.findViewById(R.id.addPost);
         rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -140,5 +167,12 @@ public class Feed extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    private void createList(){
+        for(int i=0;i<10;i++){
+            Post post = new Post("Taha","dfjslkjsdlmkhsdfmklgdfngk jdfhgdqfsjlg hdsqfmlgjkf sdhgkjmlhfdkgmldqsfngml qskghqmfdsljkg qdsfmlkgj fg",Post.extractYTId("https://www.youtube.com/watch?v=PJTs8vZKlWw"),new Date(System.currentTimeMillis()));
+            postList.add(post);
+        }
     }
 }
