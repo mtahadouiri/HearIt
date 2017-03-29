@@ -76,17 +76,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
         holder.youTubeThumbnailView.initialize(Main.YOUTUBE_API_KEY, new YouTubeThumbnailView.OnInitializedListener() {
             @Override
             public void onInitializationSuccess(YouTubeThumbnailView youTubeThumbnailView, YouTubeThumbnailLoader youTubeThumbnailLoader) {
-
                 youTubeThumbnailLoader.setVideo(post.getUrl());
                 youTubeThumbnailLoader.setOnThumbnailLoadedListener(onThumbnailLoadedListener);
                 Log.d("thumbnail","success");
             }
-
             @Override
             public void onInitializationFailure(YouTubeThumbnailView youTubeThumbnailView, YouTubeInitializationResult youTubeInitializationResult) {
-            Log.d("Failed",youTubeInitializationResult.toString());
+            Log.d("Failed","Failed");
             }
-
         });
     }
 
