@@ -17,14 +17,24 @@ public class Profile {
     private String name;
     private String email;
     private String id;
+    private int ups;
 
-    public Profile( String email,String name, String id) {
+    public Profile( String email,String name, String id,int ups) {
         this.name = name;
         this.email = email;
         this.id = id;
+        this.ups=ups;
     }
 
     public Profile() {
+    }
+
+    public int getUps() {
+        return ups;
+    }
+
+    public void setUps(int ups) {
+        this.ups = ups;
     }
 
     public String getName() {

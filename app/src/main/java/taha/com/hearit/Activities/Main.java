@@ -39,7 +39,7 @@ public class Main extends AppCompatActivity implements SignIn.OnFragmentInteract
                 if (user != null) {
                     // User is signed in
                     Log.d("onAuthStateChanged", "onAuthStateChanged:signed_in:" + user.getUid());
-                    myPROFILE=new Profile(user.getEmail(),"mtdev",user.getUid());
+                    myPROFILE=new Profile(user.getEmail(),"mtdev",user.getUid(),0);
                     Intent i = new Intent(Main.this, Home.class);
                     startActivity(i);
                 } else {

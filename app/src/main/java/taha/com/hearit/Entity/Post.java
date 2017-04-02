@@ -25,7 +25,6 @@ public class Post {
     private double id;
     private List<String> hashtags;
     private List<Profile> voters;
-    private List<Profile> commentors;
 
     public Post(String poster, String text, String URL, Long date) {
         this.poster = poster;
@@ -46,7 +45,6 @@ public class Post {
         this.date = date;
         this.hashtags = hashtags;
         this.voters = new ArrayList<>();
-        this.commentors = new ArrayList<>();
     }
 
     public double getId() {
@@ -101,14 +99,6 @@ public class Post {
         this.voters = voters;
     }
 
-    public List<Profile> getCommentors() {
-        return commentors;
-    }
-
-    public void setCommentors(List<Profile> commentors) {
-        this.commentors = commentors;
-    }
-
     public String getUrl() {
         return url;
     }
@@ -144,7 +134,6 @@ public class Post {
                 ", id=" + id +
                 ", hashtags=" + hashtags +
                 ", voters=" + voters +
-                ", commentors=" + commentors +
                 '}';
     }
 
@@ -156,7 +145,7 @@ public class Post {
         result.put("url", extractYTId(url));
         result.put("ups", ups);
         result.put("poster", Main.myPROFILE.getName());
-        result.put("userups",userUps);
+        result.put("userUps",userUps);
         result.put("id",this.getId());
         return result;
     }

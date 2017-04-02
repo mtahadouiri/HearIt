@@ -65,13 +65,15 @@
                         android:padding="3dp"
                         android:text="++0" />
                 </LinearLayout>
+
                 <TextView
                     android:id="@+id/txtCorpse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
                     android:maxLines="6"
-                    android:text="@string/TextGen" />
+                    android:text="@string/TextGen"
+                    android:textColor="@android:color/black" />
                 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                     android:id="@+id/parent_relativeLayout"
                     android:layout_width="match_parent"
@@ -95,6 +97,17 @@
                         android:layout_height="match_parent"
                         android:scaleType="center"
                         android:src="@mipmap/ic_youtube"/>
+
+                    <TextView
+                        android:id="@+id/txtVidName"
+                        android:layout_width="match_parent"
+                        android:layout_height="30dp"
+                        android:paddingLeft="10dp"
+                        android:layout_alignParentBottom="true"
+                        android:gravity="center|start"
+                        android:background="#bb000000"
+                        android:text="Video name"
+                        android:textColor="@color/cardview_light_background"/>
                 </RelativeLayout>
                 </RelativeLayout>
             </LinearLayout>
