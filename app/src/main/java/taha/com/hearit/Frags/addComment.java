@@ -7,11 +7,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import taha.com.hearit.Activities.PostDetails;
 import taha.com.hearit.Entity.Comment;
 import taha.com.hearit.R;
 
@@ -37,6 +43,9 @@ public class addComment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private DatabaseReference mDatabase;
+    private EditText corpse;
+    private Button add;
 
     public addComment() {
         // Required empty public constructor
@@ -73,7 +82,17 @@ public class addComment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_comment, container, false);
+        View v = inflater.inflate(R.layout.fragment_add_comment, container, false);
+        corpse = (EditText)v.findViewById(R.id.message);
+        add = (Button)v.findViewById(R.id.cnfrmButton);
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                commentSth(corpse.getText().toString());
+            }
+        });
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -114,14 +133,14 @@ public class addComment extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
-    private void postSth(String text, String url) {
-        String key = mDatabase.child("posts").push().getKey();
-        Comment post = new Comment(myPROFILE.getName(), text, url,new Date().getTime());
+    private void commentSth(String text) {
+        String key = mDatabase.child("comments").push().getKey();
+        Comment comment = new Comment(myPROFILE.getName(), text, myPROFILE.getUps(), PostDetails.post.getKey());
 
-        Map<String, Object> postValues = post.toMap();
+        Map<String, Object> commentValues = comment.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
-        childUpdates.put("/posts/" + key, postValues);
-        childUpdates.put("/user-posts/" + user.getUid() + "/" + key, postValues);
+        childUpdates.put("/comments/" + PostDetails.post.getKey() +"/"+key, commentValues);
+        childUpdates.put("/user-comments/" + user.getUid() + "/" +PostDetails.post.getKey() +"/"+key, commentValues);
         mDatabase.updateChildren(childUpdates);
     }
 }

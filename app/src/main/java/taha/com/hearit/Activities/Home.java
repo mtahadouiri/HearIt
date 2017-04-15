@@ -1,5 +1,6 @@
 package taha.com.hearit.Activities;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
@@ -24,8 +25,18 @@ public class Home extends AppCompatActivity implements Feed.OnFragmentInteractio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        // Get the intent that started this activity
+        Intent intent = getIntent();
+        Uri data = intent.getData();
 
-
+        try {
+            if (intent.getType().equals("text/plain")) {
+                Log.d("Intent",intent.getClipData().getItemAt(0).toString());
+            }
+        }
+        catch (Exception e){
+        e.printStackTrace();
+        }
         Fragment f = getSupportFragmentManager().findFragmentById(R.id.frameLayout);
         if (f == null) {
             getSupportFragmentManager().beginTransaction().add(R.id.frameLayout, new Feed()).commit();

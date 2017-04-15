@@ -120,7 +120,7 @@ public class SignUp extends Fragment {
                         }
                         else  {
                             user = FirebaseAuth.getInstance().getCurrentUser();
-                            myProfile = new Profile(email,username,user.getUid());
+                            myProfile = new Profile(email,username,user.getUid(),0);
                             mDatabase = FirebaseDatabase.getInstance().getReference();
                             mDatabase.child("users").child(user.getUid()).setValue(myProfile);
                             Intent i = new Intent(getActivity(), Home.class);

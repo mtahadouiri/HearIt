@@ -144,9 +144,9 @@ public class AddPost extends Fragment {
     }
 
     private void postSth(String text, String url) {
-        Post post = new Post(user.getUid(), text, url,new Date().getTime());
-
         String key = mDatabase.child("posts").push().getKey();
+        Post post = new Post(user.getUid(), text, url,new Date().getTime(),key);
+
         Map<String, Object> postValues = post.toMap();
         Map<String, Object> childUpdates = new HashMap<>();
         childUpdates.put("/posts/" + key, postValues);

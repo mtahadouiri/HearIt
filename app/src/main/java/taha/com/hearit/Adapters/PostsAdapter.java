@@ -19,9 +19,11 @@ import com.google.android.youtube.player.YouTubeStandalonePlayer;
 import com.google.android.youtube.player.YouTubeThumbnailLoader;
 import com.google.android.youtube.player.YouTubeThumbnailView;
 
+import java.io.Serializable;
 import java.util.List;
 
 import taha.com.hearit.Activities.Main;
+import taha.com.hearit.Activities.PostDetails;
 import taha.com.hearit.Entity.Post;
 import taha.com.hearit.Frags.AddPost;
 import taha.com.hearit.Frags.Feed;
@@ -52,7 +54,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
         holder.numVotes.setText(""+post.getUps());
         holder.userUps.setText("++"+post.getUps());
         holder.txtCorpse.setText(post.getText());
-        Log.d("Ups",""+post.getUps());
+        holder.txtCorpse.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("PostAdapter",post.toString());
+                Intent i = new Intent(ctx, PostDetails.class);
+                i.putExtra("post",post);
+                ctx.startActivity(i);
+            }
+        });
         holder.playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -97,7 +107,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
         protected RelativeLayout relativeLayoutOverYouTubeThumbnailView;
         YouTubeThumbnailView youTubeThumbnailView;
         protected ImageView playButton;
-        TextView txtMessage,txtUrl;
         public PostsViewHolder(View itemView) {
             super(itemView);
             userName=(TextView)itemView.findViewById(R.id.txtUserName);

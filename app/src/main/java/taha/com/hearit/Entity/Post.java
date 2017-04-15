@@ -1,5 +1,7 @@
 package taha.com.hearit.Entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -16,35 +18,66 @@ import taha.com.hearit.Activities.Main;
  * Created by PC on 21/03/2017.
  */
 
-public class Post {
+public class Post implements Parcelable {
     private String poster;
-    private String text,url;
+    private String text, url;
     private Long date;
-    public int ups ;
+    public int ups;
     public int userUps;
     private double id;
-    private List<String> hashtags;
+
+    private String key;
     private List<Profile> voters;
 
-    public Post(String poster, String text, String URL, Long date) {
+    public Post(String poster, String text, String URL, Long date, String key) {
         this.poster = poster;
         this.text = text;
         this.url = URL;
         this.date = date;
-        this.id =Math.random()*System.currentTimeMillis();
-        ups=0;
+        this.id = Math.random() * System.currentTimeMillis();
+        this.key = key;
+        ups = 0;
     }
 
     public Post() {
     }
 
 
-    public Post(String poster, String text, Long date, List<String> hashtags) {
+    public Post(String poster, String text, Long date) {
         this.poster = poster;
         this.text = text;
         this.date = date;
-        this.hashtags = hashtags;
         this.voters = new ArrayList<>();
+    }
+
+    protected Post(Parcel in) {
+        poster = in.readString();
+        text = in.readString();
+        url = in.readString();
+        ups = in.readInt();
+        userUps = in.readInt();
+        id = in.readDouble();
+        key = in.readString();
+    }
+
+    public static final Creator<Post> CREATOR = new Creator<Post>() {
+        @Override
+        public Post createFromParcel(Parcel in) {
+            return new Post(in);
+        }
+
+        @Override
+        public Post[] newArray(int size) {
+            return new Post[size];
+        }
+    };
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 
     public double getId() {
@@ -71,13 +104,7 @@ public class Post {
         this.date = date;
     }
 
-    public List<String> getHashtags() {
-        return hashtags;
-    }
 
-    public void setHashtag(List<String> hashtag) {
-        this.hashtags = hashtag;
-    }
 
     public String getPoster() {
         return poster;
@@ -87,9 +114,6 @@ public class Post {
         this.poster = poster;
     }
 
-    public void setHashtags(List<String> hashtags) {
-        this.hashtags = hashtags;
-    }
 
     public List<Profile> getVoters() {
         return voters;
@@ -131,8 +155,9 @@ public class Post {
                 ", url='" + url + '\'' +
                 ", date=" + date +
                 ", ups=" + ups +
+                ", userUps=" + userUps +
                 ", id=" + id +
-                ", hashtags=" + hashtags +
+                ", key='" + key + '\'' +
                 ", voters=" + voters +
                 '}';
     }
@@ -140,13 +165,14 @@ public class Post {
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("uid", poster);
+        result.put("key", key);
         result.put("text", text);
         result.put("date", date);
         result.put("url", extractYTId(url));
         result.put("ups", ups);
         result.put("poster", Main.myPROFILE.getName());
-        result.put("userUps",userUps);
-        result.put("id",this.getId());
+        result.put("userUps", userUps);
+        result.put("id", this.getId());
         return result;
     }
 
@@ -165,13 +191,30 @@ public class Post {
                     for (int i = 1; i <= matcher.groupCount(); i++) {
                     }
                     System.out.println("Group " + 2 + ": " + matcher.group(2));
-                    video_id=matcher.group(2);
+                    video_id = matcher.group(2);
                 }
             }
         } catch (Exception e) {
             Log.e("YoutubeActivity", "extractYTId " + e.getMessage());
         }
-        Log.d("YoutubeActivity", "extractYTId from" + youtubeUrl +"\nID :"+video_id);
+        Log.d("YoutubeActivity", "extractYTId from" + youtubeUrl + "\nID :" + video_id);
         return video_id;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(poster);
+        dest.writeString(text);
+        dest.writeString(url);
+        dest.writeInt(ups);
+        dest.writeInt(userUps);
+        dest.writeDouble(id);
+        dest.writeString(key);
+        dest.writeLong(date);
     }
 }

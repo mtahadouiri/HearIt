@@ -45,9 +45,9 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.PostsV
     @Override
     public void onBindViewHolder(final CommentsAdapter.PostsViewHolder holder, int position) {
         final Comment post=postList.get(position);
-        holder.userName.setText(post.getPoster());
-        holder.userUps.setText("++"+post.getUps());
-        holder.txtCorpse.setText(post.getText());
+        holder.userName.setText(post.getUsername());
+        holder.userUps.setText("++"+post.getUserUps());
+        holder.txtCorpse.setText(post.getTxtComment());
     }
 
     @Override
@@ -63,8 +63,6 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.PostsV
             userName=(TextView)itemView.findViewById(R.id.txtUserName);
             userUps=(TextView)itemView.findViewById(R.id.userUps);
             txtCorpse = (TextView)itemView.findViewById(R.id.txtCorpse);
-
-
         }
     }
 

@@ -3,10 +3,10 @@
     android:layout_width="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,30 +65,30 @@
                             android:gravity="center"
                             android:text="0"
                             android:textColor="@android:color/holo_red_dark" />
-                        </LinearLayout>
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/txtUserName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxEms="100"
-                        android:text="Jon Doe"
-                        android:textColor="@android:color/holo_blue_light"
-                        android:textSize="18sp" />
+                        <TextView
+                            android:id="@+id/txtUserName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:maxEms="100"
+                            android:text="Jon Doe"
+                            android:textColor="@android:color/holo_blue_light"
+                            android:textSize="18sp" />
 
-                    <TextView
-                        android:id="@+id/userUps"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@drawable/user_ups_border"
-                        android:padding="3dp"
-                        android:text="++0" />
-                </LinearLayout>
+                        <TextView
+                            android:id="@+id/userUps"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:background="@drawable/user_ups_border"
+                            android:padding="3dp"
+                            android:text="++0" />
                     </LinearLayout>
+                </LinearLayout>
                 <TextView
                     android:id="@+id/txtCorpse"
                     android:layout_width="wrap_content"
@@ -101,24 +101,24 @@
                     android:layout_height="1dp"
                     android:background="@android:color/darker_gray"
                     android:layout_margin="20dp"/>
-<android.support.design.widget.CoordinatorLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvComments"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addPost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_input_add"
-        app:layout_anchor="@id/rvComments"
-        app:layout_anchorGravity="bottom|right"
-        android:layout_marginBottom="5dp"/>
-</android.support.design.widget.CoordinatorLayout>
+                <android.support.design.widget.CoordinatorLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvComments"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/addPost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@android:drawable/ic_input_add"
+                        app:layout_anchor="@id/rvComments"
+                        app:layout_anchorGravity="bottom|center"
+                        android:layout_marginBottom="5dp"/>
+                </android.support.design.widget.CoordinatorLayout>
 
             </LinearLayout>
         </LinearLayout>
-</LinearLayout>
-    </ScrollView>
+    </LinearLayout>
+</ScrollView>

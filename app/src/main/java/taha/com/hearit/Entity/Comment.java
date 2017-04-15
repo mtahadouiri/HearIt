@@ -3,29 +3,33 @@ package taha.com.hearit.Entity;
 import java.util.HashMap;
 import java.util.Map;
 
-import taha.com.hearit.Activities.Main;
-
 /**
  * Created by Taha on 02/04/2017.
  */
 
 public class Comment {
-    private String id;
-    private String username,txtComment,userUps,postID;
+    private double id;
+    private String username,txtComment;
+    private int userUps;
+    private String postKey;
 
-    public Comment(String username, String txtComment, String userUps, String postID) {
+    public Comment(String username, String txtComment, int userUps, String postID) {
 
         this.username = username;
         this.txtComment = txtComment;
         this.userUps = userUps;
-        this.postID = postID;
+        this.postKey = postID;
+        id=Math.random() * System.currentTimeMillis();
     }
 
-    public String getId() {
+    public Comment() {
+    }
+
+    public double getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(double id) {
         this.id = id;
     }
 
@@ -45,20 +49,20 @@ public class Comment {
         this.txtComment = txtComment;
     }
 
-    public String getUserUps() {
+    public int getUserUps() {
         return userUps;
     }
 
-    public void setUserUps(String userUps) {
+    public void setUserUps(int userUps) {
         this.userUps = userUps;
     }
 
-    public String getPostID() {
-        return postID;
+    public String getPostKey() {
+        return postKey;
     }
 
-    public void setPostID(String postID) {
-        this.postID = postID;
+    public void setPostKey(String postKey) {
+        this.postKey = postKey;
     }
 
     @Override
@@ -68,7 +72,7 @@ public class Comment {
                 ", username='" + username + '\'' +
                 ", txtComment='" + txtComment + '\'' +
                 ", userUps='" + userUps + '\'' +
-                ", postID='" + postID + '\'' +
+                ", postKey='" + postKey + '\'' +
                 '}';
     }
 
@@ -78,7 +82,7 @@ public class Comment {
         result.put("username", username);
         result.put("txtComment", txtComment);
         result.put("userUps", userUps);
-        result.put("postID",postID);
+        result.put("postKey", postKey);
         return result;
     }
 }
