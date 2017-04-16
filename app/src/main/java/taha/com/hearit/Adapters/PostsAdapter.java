@@ -44,14 +44,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
 
     @Override
     public PostsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new PostsViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.one_post,parent,false));
+        return new PostsViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.card_main_2,parent,false));
     }
 
     @Override
     public void onBindViewHolder(final PostsViewHolder holder, int position) {
         final Post post=postList.get(position);
         holder.userName.setText(post.getPoster());
-        holder.numVotes.setText(""+post.getUps());
+        //holder.numVotes.setText(""+post.getUps());
         holder.userUps.setText("++"+post.getUps());
         holder.txtCorpse.setText(post.getText());
         holder.txtCorpse.setOnClickListener(new View.OnClickListener() {
@@ -110,7 +110,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsViewHol
         public PostsViewHolder(View itemView) {
             super(itemView);
             userName=(TextView)itemView.findViewById(R.id.txtUserName);
-            numVotes=(TextView)itemView.findViewById(R.id.numVotes);
+            //numVotes=(TextView)itemView.findViewById(R.id.numVotes);
             userUps=(TextView)itemView.findViewById(R.id.userUps);
             txtCorpse = (TextView)itemView.findViewById(R.id.txtCorpse);
             playButton =(ImageView)itemView.findViewById(R.id.btnYoutube_player);

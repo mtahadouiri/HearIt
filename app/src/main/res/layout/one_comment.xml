@@ -4,47 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:padding="5dp"
     android:orientation="vertical">
+
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/txtUserName"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:maxEms="100"
+                android:text="Jon Doe"
+                android:textColor="@android:color/holo_blue_light"
+                android:textSize="18sp" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/txtUserName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:maxEms="100"
-                        android:text="Jon Doe"
-                        android:textColor="@android:color/holo_blue_light"
-                        android:textSize="18sp" />
-
-                    <TextView
-                        android:id="@+id/userUps"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:background="@drawable/user_ups_border"
-                        android:padding="3dp"
-                        android:text="++0" />
-                </LinearLayout>
-                <TextView
-                    android:id="@+id/txtCorpse"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ellipsize="end"
-                    android:maxEms="1000"
-                    android:text="@string/TextGen" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/userUps"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/user_ups_border"
+                android:padding="3dp"
+                android:text="++0" />
         </LinearLayout>
+        <TextView
+            android:id="@+id/txtCorpse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxEms="1000"
+            android:text="@string/TextGen" />
 </LinearLayout>

@@ -112,32 +112,6 @@ public class PostDetails extends AppCompatActivity {
 
         postsAdapter = new CommentsAdapter(commentList, this);
         rv.setAdapter(postsAdapter);
-
-        fab = (FloatingActionButton) findViewById(R.id.addPost);
-        rv.addOnScrollListener(new RecyclerView.OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                if (dy > 0 || dy < 0 && fab.isShown()) {
-                    fab.hide();
-                }
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    fab.show();
-                }
-
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(PostDetails.this, taha.com.hearit.Activities.Comment.class);
-                startActivity(i);
-            }
-        });
         updateList();
     }
 

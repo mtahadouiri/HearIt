@@ -9,7 +9,7 @@
 <android.support.design.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/cardview_dark_background">
+    android:background="@color/gray_very_light">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvFeed"
         android:layout_width="match_parent"
@@ -19,10 +19,11 @@
         android:id="@+id/addPost"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@android:drawable/ic_input_add"
+        android:layout_marginBottom="5dp"
+        android:src="@mipmap/ic_add_white_24dp"
+        app:backgroundTint="@color/app_red"
         app:layout_anchor="@id/rvFeed"
-        app:layout_anchorGravity="bottom|center"
-        android:layout_marginBottom="5dp"/>
+        app:layout_anchorGravity="bottom|center" />
 
 </android.support.design.widget.CoordinatorLayout>
 
